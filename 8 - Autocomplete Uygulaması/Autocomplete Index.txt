@@ -1,0 +1,58 @@
+//  localhost:9200/autocompletetest
+{
+	"settings":{
+		"analysis":{
+			"filter":{
+				"autocomplete_filter":{
+					"type":"edge_ngram",
+					"min_gram":3,
+					"max_gram":8
+				}
+			},
+			"analyzer":{
+				"autocomplete":{
+					"type":"custom",
+					"tokenizer":"standard",
+					"filter":[
+						"lowercase",
+						"autocomplete_filter"
+					]
+				}
+			}
+		}
+	},
+	"mappings":{
+		"properties":{
+			"title":{
+				"type":"text",
+				"analyzer":"autocomplete",
+				"search_analyzer":"standard"
+			}
+		}
+	}
+	
+}
+
+//localhost:9200/autocompletetest/_doc/1
+
+{
+	"title":"iphone 7"
+}
+
+//localhost:9200/autocompletetest/_doc/2
+
+{
+	"title":"iphone 8"
+}
+
+//localhost:9200/autocompletetest/_search
+
+{
+	"query":{
+		"match":{
+			"title":{
+				"query":"iph"
+			}
+		}
+	}
+}

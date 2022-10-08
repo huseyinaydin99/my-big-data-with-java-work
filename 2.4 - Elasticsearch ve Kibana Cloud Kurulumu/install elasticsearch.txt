@@ -1,0 +1,22 @@
+echo "deb https://artifacts.elastic.co/packages/7.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-7.x.list
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt update
+sudo apt -y install elasticsearch
+sudo systemctl daemon-reload
+sudo systemctl enable elasticsearch
+sudo systemctl start elasticsearch
+
+curl -XGET 'localhost:9200/?pretty'
+
+sudo nano /etc/elasticsearch/elasticsearch.yml
+sudo systemctl restart elasticsearch
+
+
+sudo apt -y install kibana
+sudo systemctl daemon-reload
+sudo systemctl enable kibana
+sudo systemctl start kibana
+
+
+sudo nano /etc/kibana/kibana.yml
+sudo systemctl restart kibana
